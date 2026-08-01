@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card glass-card p-4">
+            <h3 class="fw-bold mb-4"><i class="bi bi-pencil-square"></i> Edit Question #{{ q.id }}</h3>
+            <form action="{{ url_for('edit_question', id=q.id) }}" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Question Text</label>
+                    <textarea name="question" class="form-control" rows="3" required>{{ q.question }}</textarea>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Option 1</label>
+                        <input type="text" name="option1" class="form-control" value="{{ q.option1 }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Option 2</label>
+                        <input type="text" name="option2" class="form-control" value="{{ q.option2 }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Option 3</label>
+                        <input type="text" name="option3" class="form-control" value="{{ q.option3 }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Option 4</label>
+                        <input type="text" name="option4" class="form-control" value="{{ q.option4 }}" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Correct Answer</label>
+                    <input type="text" name="answer" class="form-control" value="{{ q.answer }}" required>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Subject</label>
+                        <input type="text" name="subject" class="form-control" value="{{ q.subject }}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Category</label>
+                        <input type="text" name="category" class="form-control" value="{{ q.category }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Difficulty</label>
+                        <select name="difficulty" class="form-select">
+                            <option value="Easy" {% if q.difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+                            <option value="Medium" {% if q.difficulty == 'Medium' %}selected{% endif %}>Medium</option>
+                            <option value="Hard" {% if q.difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Explanation</label>
+                    <textarea name="explanation" class="form-control" rows="2">{{ q.explanation or '' }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-warning w-100 py-2">Update Question</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

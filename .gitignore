@@ -1,0 +1,27 @@
+# SQLite Database files (keeps your local user data private)
+*.db
+*.sqlite3
+instance/
+
+# Python Virtual Environment
+venv/
+ENV/
+env/
+
+# Python Cache & Bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment Variables / Secret keys
+.env
+.flaskenv
+
+# IDE & Editor folders
+.vscode/
+.idea/
+
+# OS generated files
+Thumbs.db
+.DS_Store

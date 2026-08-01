@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<div class="card p-5 text-center">
+
+
+<h1>
+🎉 Quiz Completed
+</h1>
+
+
+<h2 class="text-primary">
+
+{{score}} / {{total}}
+
+</h2>
+
+
+<p>
+
+Your Score
+
+</p>
+
+
+<a href="/dashboard"
+class="btn btn-primary">
+
+Back Dashboard
+
+</a>
+
+
+<a href="/history"
+class="btn btn-success">
+
+View History
+
+</a>
+
+
+</div>
+
+
+{% endblock %}

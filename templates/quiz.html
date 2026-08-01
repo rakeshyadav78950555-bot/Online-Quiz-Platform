@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        {% if not quiz or not quiz.questions %}
+            <div class="card p-5 text-center">
+                <h3 class="text-warning mb-3"><i class="bi bi-exclamation-triangle"></i> No Questions Found</h3>
+                <p class="text-secondary mb-4">No questions match your selection. Return to dashboard and try again.</p>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Return to Dashboard</a>
+            </div>
+        {% else %}
+            <div class="card p-4">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-primary fs-6" id="q-counter">Question 1 of {{ quiz.questions|length }}</span>
+                    <span class="badge bg-danger fs-6" id="timer-display">Time Left: --</span>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress mb-4" style="height: 8px;">
+                    <div class="progress-bar bg-primary" id="quiz-progress" style="width: 0%"></div>
+                </div>
+
+                <!-- Form Wrapping Questions -->
+                <form id="quiz-form">
+                    {% for q in quiz.questions %}
+                    <div class="question-block" id="q-step-{{ loop.index0 }}" style="{% if not loop.first %}display: none;{% endif %}">
+                        <h4 class="fw-bold mb-4 text-dark">{{ loop.index }}. {{ q.question }}</h4>
+                        
+                        <div class="d-grid gap-3 mb-4">
+                            {% for opt in q.options %}
+                            <label class="p-3 border rounded d-flex align-items-center bg-light option-label" style="cursor: pointer;">
+                                <input class="form-check-input me-3" type="radio" name="q_{{ q.id }}" value="{{ opt }}">
+                                <span class="fs-6 fw-semibold text-dark">{{ opt }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </form>
+
+                <!-- Navigation Controls -->
+                <div class="d-flex justify-content-between align-items-center border-top pt-3">
+                    <button type="button" class="btn btn-outline-secondary px-4" id="btn-prev" onclick="navigateQuestion(-1)" disabled>
+                        &larr; Previous
+                    </button>
+                    <button type="button" class="btn btn-primary px-4 fw-bold" id="btn-next" onclick="navigateQuestion(1)">
+                        Next &rarr;
+                    </button>
+                </div>
+
+                <hr class="my-4">
+                
+                <button type="button" class="btn btn-success w-100 py-2 fw-bold fs-5" onclick="submitQuizNow()">
+                    Submit Quiz Final
+                </button>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let currentStep = 0;
+    const totalSteps = {{ quiz.questions|length if quiz and quiz.questions else 0 }};
+    let timeLeft = parseInt("{{ quiz.timer if quiz else 60 }}") || 60;
+
+    function navigateQuestion(direction) {
+        const targetStep = currentStep + direction;
+
+        if (targetStep >= 0 && targetStep < totalSteps) {
+            // Hide current question, show next question
+            document.getElementById(`q-step-${currentStep}`).style.display = 'none';
+            document.getElementById(`q-step-${targetStep}`).style.display = 'block';
+            currentStep = targetStep;
+
+            // Update Progress & Text Counter
+            document.getElementById('q-counter').innerText = `Question ${currentStep + 1} of ${totalSteps}`;
+            const percentage = ((currentStep + 1) / totalSteps) * 100;
+            document.getElementById('quiz-progress').style.width = `${percentage}%`;
+
+            // Control Prev / Next button states
+            document.getElementById('btn-prev').disabled = (currentStep === 0);
+            
+            const nextBtn = document.getElementById('btn-next');
+            if (currentStep === totalSteps - 1) {
+                nextBtn.disabled = true;
+                nextBtn.innerText = 'End of Quiz';
+            } else {
+                nextBtn.disabled = false;
+                nextBtn.innerHTML = 'Next &rarr;';
+            }
+        }
+    }
+
+    function submitQuizNow() {
+        const formData = new FormData(document.getElementById('quiz-form'));
+        const answers = {};
+        formData.forEach((value, key) => {
+            answers[key.replace('q_', '')] = value;
+        });
+
+        fetch("{{ url_for('quiz_submit') }}", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ answers: answers })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            }
+        })
+        .catch(err => console.error('Error submitting quiz:', err));
+    }
+
+    // Countdown Timer logic
+    if (totalSteps > 0) {
+        const timerElem = document.getElementById('timer-display');
+        const timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('Time limit reached! Submitting quiz.');
+                submitQuizNow();
+            } else {
+                const mins = Math.floor(timeLeft / 60);
+                const secs = timeLeft % 60;
+                timerElem.innerText = `Time Left: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                timeLeft--;
+            }
+        }, 1000);
+
+        // Initial Progress bar state
+        document.getElementById('quiz-progress').style.width = `${(1 / totalSteps) * 100}%`;
+    }
+</script>
+{% endblock %}

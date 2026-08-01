@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4 mb-4">
+    <div class="col-md-8">
+        <h2 class="fw-bold">Welcome back, {{ current_user.username }} 👋</h2>
+        <p class="text-secondary">Configure your test session below to practice dynamic real-time quizzes.</p>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{{ url_for('leaderboard') }}" class="btn btn-outline-info me-2"><i class="bi bi-trophy"></i> Leaderboard</a>
+        <a href="{{ url_for('history') }}" class="btn btn-outline-secondary"><i class="bi bi-clock-history"></i> History</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card glass-card p-4">
+            <h4 class="mb-3"><i class="bi bi-sliders"></i> Quiz Configuration</h4>
+            <form action="{{ url_for('quiz_setup') }}" method="POST">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Subject</label>
+                        <select name="subject" class="form-select">
+                            <option value="All">All Subjects</option>
+                            {% for s in subjects %}
+                                <option value="{{ s }}">{{ s }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Difficulty</label>
+                        <select name="difficulty" class="form-select">
+                            <option value="All">All Levels</option>
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Questions</label>
+                        <input type="number" name="num_questions" class="form-control" value="5" min="1" max="50">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Timer (Seconds)</label>
+                        <select name="timer" class="form-select">
+                            <option value="30">30 Seconds</option>
+                            <option value="60" selected>60 Seconds</option>
+                            <option value="120">120 Seconds</option>
+                        </select>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Start Quiz Now</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card glass-card p-4">
+            <h4>Quick Stats</h4>
+            <hr>
+            <div class="d-flex justify-content-between mb-2">
+                <span>Attempted Quizzes</span>
+                <span class="fw-bold">{{ total_quizzes }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span>Available Questions</span>
+                <span class="fw-bold">{{ total_questions }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

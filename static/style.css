@@ -1,0 +1,495 @@
+/* ===================================
+   ONLINE QUIZ PLATFORM CSS
+   
+=================================== */
+
+
+/* Reset */
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
+
+body{
+
+font-family:'Poppins','Segoe UI',sans-serif;
+
+background:
+linear-gradient(
+135deg,
+#667eea,
+#764ba2
+);
+
+min-height:100vh;
+
+color:#333;
+
+}
+
+
+/* Main Container */
+
+.container{
+
+animation:pageLoad 0.6s ease;
+
+padding-bottom:40px;
+
+}
+
+
+
+/* ===============================
+Navbar
+================================ */
+
+
+.navbar{
+
+background:
+rgba(255,255,255,0.95)!important;
+
+backdrop-filter:blur(10px);
+
+padding:15px 0;
+
+box-shadow:
+0 5px 20px rgba(0,0,0,0.15);
+
+}
+
+
+.navbar-brand{
+
+font-size:28px;
+
+font-weight:800;
+
+color:#667eea!important;
+
+letter-spacing:1px;
+
+}
+
+
+
+.navbar .btn{
+
+margin-left:10px;
+
+}
+
+
+
+/* ===============================
+Cards
+================================ */
+
+
+.card{
+
+border:none!important;
+
+border-radius:25px!important;
+
+background:
+
+rgba(255,255,255,0.95);
+
+box-shadow:
+
+0 15px 35px rgba(0,0,0,0.15);
+
+transition:0.4s;
+
+overflow:hidden;
+
+}
+
+
+
+.card:hover{
+
+transform:
+
+translateY(-8px);
+
+box-shadow:
+
+0 25px 50px rgba(0,0,0,0.25);
+
+}
+
+
+
+
+/* ===============================
+Buttons
+================================ */
+
+
+.btn{
+
+border:none;
+
+border-radius:50px!important;
+
+padding:12px 30px;
+
+font-weight:600;
+
+transition:0.3s;
+
+}
+
+
+
+.btn-primary{
+
+background:
+
+linear-gradient(
+45deg,
+#667eea,
+#764ba2
+);
+
+}
+
+
+
+.btn-success{
+
+background:
+
+linear-gradient(
+45deg,
+#11998e,
+#38ef7d
+);
+
+}
+
+
+
+.btn-danger{
+
+background:
+
+linear-gradient(
+45deg,
+#ff416c,
+#ff4b2b
+);
+
+}
+
+
+
+.btn:hover{
+
+transform:
+
+scale(1.08);
+
+box-shadow:
+
+0 10px 20px rgba(0,0,0,0.2);
+
+}
+
+
+
+/* ===============================
+Home Page
+================================ */
+
+
+.display-4{
+
+font-weight:900;
+
+background:
+
+linear-gradient(
+45deg,
+#667eea,
+#764ba2
+);
+
+-webkit-background-clip:text;
+
+color:transparent;
+
+}
+
+
+.lead{
+
+font-size:20px;
+
+color:#555;
+
+}
+
+
+
+
+/* ===============================
+Forms
+================================ */
+
+
+.form-control{
+
+height:50px;
+
+border-radius:15px;
+
+border:2px solid #eee;
+
+padding:15px;
+
+font-size:16px;
+
+transition:0.3s;
+
+}
+
+
+
+.form-control:focus{
+
+border-color:#667eea;
+
+box-shadow:
+
+0 0 15px #667eea55;
+
+}
+
+
+
+/* ===============================
+Dashboard
+================================ */
+
+
+.dashboard-card{
+
+text-align:center;
+
+padding:30px;
+
+}
+
+
+
+.dashboard-card h4{
+
+font-size:25px;
+
+font-weight:700;
+
+color:#667eea;
+
+}
+
+
+
+.dashboard-card p{
+
+color:#666;
+
+}
+
+
+
+/* ===============================
+Quiz Page
+================================ */
+
+
+.quiz-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+
+
+.quiz-title{
+
+font-weight:800;
+
+color:#667eea;
+
+}
+
+
+
+
+/* Question Box */
+
+
+.question-card{
+
+background:white;
+
+padding:25px;
+
+border-radius:20px;
+
+margin-bottom:20px;
+
+box-shadow:
+
+0 10px 25px rgba(0,0,0,0.1);
+
+}
+
+
+
+.question-card h5{
+
+font-size:20px;
+
+font-weight:700;
+
+}
+
+
+
+/* Options */
+
+
+.form-check{
+
+background:#f7f8ff;
+
+padding:15px;
+
+margin:12px 0;
+
+border-radius:15px;
+
+transition:0.3s;
+
+cursor:pointer;
+
+}
+
+
+
+.form-check:hover{
+
+background:#e6ebff;
+
+transform:
+
+translateX(8px);
+
+}
+
+
+
+.form-check-input{
+
+width:20px;
+
+height:20px;
+
+cursor:pointer;
+
+}
+
+
+.form-check label{
+
+margin-left:10px;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+/* ===============================
+   Timer Design
+================================ */
+
+
+#timer{
+
+font-size:32px;
+
+font-weight:900;
+
+color:#ff416c;
+
+background:#fff0f3;
+
+padding:10px 20px;
+
+border-radius:50px;
+
+display:inline-block;
+
+animation:pulse 1s infinite;
+
+}
+
+
+
+@keyframes pulse{
+
+
+0%{
+
+transform:scale(1);
+
+}
+
+
+50%{
+
+transform:scale(1.1);
+
+}
+
+
+100%{
+
+transform:scale(1);
+
+}
+
+
+}
+
+
+
+/* ===============================
+   Progress Bar
+================================ */
+
+
+.progress{
+
+height:18px;
+
+background:#eee;
+
+border-radius:50px;
+
+overflow:hidden
